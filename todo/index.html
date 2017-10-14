@@ -1,0 +1,168 @@
+<head>
+    <style>
+        /** {
+            border: 1px solid red;
+        }*/
+        
+        .app {
+            position: relative;
+            background: #fff;
+            margin: 130px 0px 40px 0px;
+            position: relative;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: arial;
+        }
+        
+        .title {
+            color: #EAD7D7;
+            text-align: center;
+            font-size: 95px;
+        }
+        
+        .todo-widget {
+            margin-left: auto;
+            margin-right: auto;
+            width: 500px;
+        }
+        
+        .toggle-all {
+            position: relative;
+            transform: rotate(90deg);
+            -webkit-appearance: none;
+            outline: none;
+        }
+        
+        .toggle-all:checked:before {
+            color: #737373;
+        }
+        
+        .toggle-all::before {
+            content: "❯";
+            font-size: 22px;
+            color: #e6e6e6;
+            padding: 10px 7px 10px 7px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin-bottom: 10px;
+        }
+        
+        .add-new-todo {
+            font-size: 30px;
+            position: relative;
+        }
+        
+        ul.todos>li {
+            font-size: 30px;
+            font-family: arial;
+            border-bottom: 1px solid #ededed;
+            position: relative;
+        }
+        
+        .todo-text {
+            display: block;
+            margin-left: 45px;
+            padding: 15px 60px 15px 15px;
+            font-weight: 300;
+            font-size: 24px;
+        }
+        
+        ul li input {
+            outline: none;
+            user-select: text;
+            background: none;
+            height: 40px;
+            content: none;
+            -webkit-appearance: none;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            margin: auto 0;
+            left: 0px;
+        }
+        
+        ul li:hover .destroy {
+            display: inline-block;
+        }
+        
+        .destroy {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 0px;
+            bottom: 0px;
+            color: #af5b5e;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            margin: auto;
+        }
+        
+        ul li .destory:after {
+            content: 'x';
+        }
+        
+        ul li label.completed-true {
+            text-decoration: line-through;
+            color: lightgray;
+        }
+        
+        ul li input:after {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+        }
+        
+        ul li input:checked:after {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
+        }
+        
+        .todo-count {
+            float: left;
+        }
+        
+        .filters {
+            text-align: center;
+            position: absolute;
+            right: 0px;
+            left: 0px;
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        .filters li {
+            display: inline;
+            margin: 5px;
+        }
+        
+        .filters li a.selected {
+            border-color: rgba(175, 47, 47, 0.2);
+            border-width: 1px;
+        }
+        
+        .clear-completed {
+            float: right;
+        }
+        
+        .footer {
+            right: 0px;
+            left: 0px;
+            bottom: 0px;
+            overflow: hidden;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<div class="todo-widget">
+    <div class="app" />
+</div>
+
+
+
+<script src="bundle.js"></script>
