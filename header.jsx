@@ -1,28 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+class Header extends React.Component {
     handleChangeHandler = (event) => {
         this.setState({value: event.target.value});
     };
-
-    newTodoHandler = (event) => {
-        this
-            .props
-            .onNew(this.state.value);
-    };
-
+    
     onEnter = (event) => {
         if (event.key === 'Enter') {
-            this.newTodoHandler(event);
-            console.log(event.target.value);
+            this.props.dispatch({type: 'NEW_TODO_ACTION', title: this.state.value});
             event.target.value = '';
         }
     };
-
     render = () => {
         return <header>
             <div className="title">todos</div>
@@ -42,7 +31,18 @@ export default class Header extends React.Component {
             </div>
         </header>;
     }
-
+    
+    constructor(props) {
+        super(props);
+    }
+    
 }
 
 
+function mapStateToProps(state) {
+    return {
+        rows: state.rows
+    };
+}
+
+export default connect(mapStateToProps)(Header);

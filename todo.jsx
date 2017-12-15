@@ -1,13 +1,6 @@
 import React from 'react';
 
 export default class Todo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isDone: props.isDone
-        };
-    }
-
     deleteTodoHandler = (event) => {
         const indexToRemove = event
             .target
@@ -16,7 +9,6 @@ export default class Todo extends React.Component {
             .props
             .onDelete(indexToRemove);
     };
-
     handleChangeHandler = (event) => {
         const indexToChange = event
             .target
@@ -25,7 +17,14 @@ export default class Todo extends React.Component {
             .props
             .onChangeTodo(indexToChange);
     };
-
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            isDone: props.isDone
+        };
+    }
+    
     render() {
         return <li style={{
             position: "relative"
@@ -37,9 +36,9 @@ export default class Todo extends React.Component {
                 checked={this.props.isDone}/>
             <label
                 style={{
-                position: "relative",
-                left: "60px"
-            }}
+                    position: "relative",
+                    left: "60px"
+                }}
                 className={"completed-" + this.props.isDone}>{this.props.number}</label>
             <input
                 type="button"
