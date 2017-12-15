@@ -7,13 +7,13 @@ export default class Header extends React.Component {
 
     handleChangeHandler = (event) => {
         this.setState({value: event.target.value});
-    }
+    };
 
     newTodoHandler = (event) => {
         this
             .props
             .onNew(this.state.value);
-    }
+    };
 
     onEnter = (event) => {
         if (event.key === 'Enter') {
@@ -21,7 +21,7 @@ export default class Header extends React.Component {
             console.log(event.target.value);
             event.target.value = '';
         }
-    }
+    };
 
     render = () => {
         return <header>

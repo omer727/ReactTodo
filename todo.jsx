@@ -15,7 +15,7 @@ export default class Todo extends React.Component {
         this
             .props
             .onDelete(indexToRemove);
-    }
+    };
 
     handleChangeHandler = (event) => {
         const indexToChange = event
@@ -24,7 +24,7 @@ export default class Todo extends React.Component {
         this
             .props
             .onChangeTodo(indexToChange);
-    }
+    };
 
     render() {
         return <li style={{
