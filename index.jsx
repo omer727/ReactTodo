@@ -51,7 +51,6 @@ class App extends React.Component {
     deleteTodo = (indexToRemove) => {
         const rowsAfterDelete = this.props.rows;
         rowsAfterDelete.splice(indexToRemove, 1);
-        console.log(rowsAfterDelete);
         this.setState({"rows": rowsAfterDelete});
     };
     
@@ -71,9 +70,10 @@ class App extends React.Component {
     };
     
     clearCompleted = () => {
-        const rows = this.props.rows;
-        const unCompletedTodos = rows.filter(row => !row.isDone);
-        this.setState({rows: unCompletedTodos});
+        this.props.dispatch({type: 'CLEAR_COMPLETED'});
+        // const rows = this.props.rows;
+        // const unCompletedTodos = rows.filter(row => !row.isDone);
+        // this.setState({rows: unCompletedTodos});
     };
     
     render = () => {
@@ -103,8 +103,7 @@ const Footer = (props) => {
         "marginLeft": "10px"
     };
     let linksStyle = {
-        display: "inline-block",
-        "marginRight": "10px"
+        display: "inline-block",        
     };
     
     return <footer className="footer">
@@ -121,7 +120,7 @@ const Footer = (props) => {
             </li>
         </ul>
         
-        <div>
+        <div style={{display:"inline", position:"absolute",right:"15px"}}>
             <a className="clear-completed" style={linksStyle} href="#" onClick={props.clearCompleted}>Clear
                 completed</a>
         </div>
@@ -148,6 +147,10 @@ const reducer = (state = initialState, action) => {
         case 'NEW_TODO_ACTION':
             let newRow = {title: action.title, isDone: false};
             return {rows: [...state.rows, newRow]};
+        case 'CLEAR_COMPLETED':
+            let unCompletedTodos = state.rows.filter(row => !row.isDone);
+            return {rows: unCompletedTodos};
+
     }
     return state;
 };

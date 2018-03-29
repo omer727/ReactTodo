@@ -12,7 +12,7 @@
         }
         
         body {
-            font-family: arial,serif;
+            font-family: arial, serif;
         }
         
         .title {
@@ -58,7 +58,7 @@
         
         ul.todos>li {
             font-size: 30px;
-            font-family: arial,serif;
+            font-family: arial, serif;
             border-bottom: 1px solid #ededed;
             position: relative;
         }
@@ -70,7 +70,7 @@
             font-weight: 300;
             font-size: 24px;
         }
-
+        
         ul li input {
             outline: none;
             user-select: text;
@@ -84,11 +84,11 @@
             margin: auto 0;
             left: 0;
         }
-
+        
         ul li:hover .destroy {
             display: inline-block;
         }
-
+        
         .destroy {
             display: none;
             position: absolute;
@@ -103,11 +103,11 @@
             font-size: 30px;
             margin: auto;
         }
-
+        
         ul li .destory:after {
             content: 'x';
         }
-
+        
         ul li label.completed-true {
             text-decoration: line-through;
             color: lightgray;
@@ -126,27 +126,26 @@
         }
         
         .filters {
+            display: inline-block;
             text-align: center;
-            position: absolute;
-            right: 0;
-            left: 0;
+            margin: auto;
             padding: 0;
-            margin: 0;
+            width: 60%;
         }
         
         .filters li {
             display: inline;
             margin: 5px;
         }
-
+        
         .filters li a.selected {
             border: 1px rgba(175, 47, 47, 0.2);
         }
-
+        
         .clear-completed {
-            float: right;
+            display: inline;
         }
-
+        
         .footer {
             right: 0;
             left: 0;
@@ -158,7 +157,7 @@
 </head>
 
 <div class="todo-widget">
-    <div class="app" ></div>
+    <div class="app"></div>
 </div>
 
 
