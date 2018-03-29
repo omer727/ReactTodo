@@ -2,17 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
-    handleChangeHandler = (event) => {
-        this.setState({value: event.target.value});
-    };
-    
     onEnter = (event) => {
-        if (event.key === 'Enter') {
-            this.props.dispatch({type: 'NEW_TODO_ACTION', title: this.state.value});
+        if (event.key === 'Enter' &&  event.target.value !== '') {
+            this.props.dispatch({type: 'NEW_TODO_ACTION', title: event.target.value});
             event.target.value = '';
         }
     };
-    render = () => {
+    
+    render(){
         return <header>
             <div className="title">todos</div>
             <div className="todos-header">
@@ -24,8 +21,7 @@ class Header extends React.Component {
                 <input
                     type="text"
                     className="add-new-todo"
-                    onKeyDown={this.onEnter}
-                    onChange={this.handleChangeHandler}
+                    onKeyDown={this.onEnter}                    
                     placeholder="What's need to be done?"
                     autoFocus/>
             </div>
