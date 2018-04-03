@@ -1,29 +1,29 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import {connect} from 'react-redux';
 
 class Footer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.clearCompleted = this.clearCompleted.bind(this);
+  constructor (props) {
+    super (props);
+    this.clearCompleted = this.clearCompleted.bind (this);
   }
 
-  clearCompleted() {
-    this.props.dispatch({ type: "CLEAR_COMPLETED" });
+  clearCompleted () {
+    this.props.dispatch ({type: 'CLEAR_COMPLETED'});
   }
 
   itemsLeftStyle = {
-    display: "inline-block",
-    marginLeft: "10px"
+    display: 'inline-block',
+    marginLeft: '10px',
   };
   linksStyle = {
-    display: "inline-block"
+    display: 'inline-block',
   };
 
-  render() {
+  render () {
     return (
       <footer className="footer">
         <div className="todo-count" style={this.itemsLeftStyle}>
-          {this.props.rows.filter(todo => !todo.isDone).length} items left
+          {this.props.rows.filter (todo => !todo.isDone).length} items left
         </div>
         <ul className="filters" style={this.linksStyle}>
           <li>
@@ -39,9 +39,9 @@ class Footer extends React.Component {
 
         <div
           style={{
-            display: "inline",
-            position: "absolute",
-            right: "15px"
+            display: 'inline',
+            position: 'absolute',
+            right: '15px',
           }}
         >
           <a
@@ -58,10 +58,10 @@ class Footer extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
-    rows: state.rows
+    rows: state.rows,
   };
 }
 
-export default connect(mapStateToProps)(Footer);
+export default connect (mapStateToProps) (Footer);
