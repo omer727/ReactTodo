@@ -2,12 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
-    onEnter = (event) => {
+
+    constructor(props){
+        super(props);
+        this.onEnter = this.onEnter.bind(this);
+        this.onToggleAll = this.onToggleAll.bind(this);        
+    }
+
+    onToggleAll(event){
+        this.props.dispatch({type: 'TOGGLE_ALL'});
+    }
+
+    onEnter(event){        
         if (event.key === 'Enter' &&  event.target.value !== '') {
             this.props.dispatch({type: 'NEW_TODO_ACTION', title: event.target.value});
             event.target.value = '';
         }
-    };
+    }
     
     render(){
         return <header>
@@ -16,8 +27,8 @@ class Header extends React.Component {
                 <input
                     type="checkbox"
                     className="toggle-all"
-                    onChange={this.props.onToggleDone}
-                    checked={this.props.onIsAllDone}/>
+                    onChange={this.onToggleAll}
+                    checked={this.props.rows.every((x) => x.isDone)}/>
                 <input
                     type="text"
                     className="add-new-todo"
@@ -28,9 +39,7 @@ class Header extends React.Component {
         </header>;
     }
     
-    constructor(props) {
-        super(props);
-    }
+    
     
 }
 

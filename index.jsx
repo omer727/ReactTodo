@@ -1,13 +1,13 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Header from './header.jsx';
+import Footer from './footer.jsx';
 import Todo from './todo.jsx';
 import {connect, Provider} from 'react-redux';
 import {createStore} from 'redux';
 
-
 class TodoWidget extends React.Component {
-    
+
     render = () => {
         const todos = this
             .state
@@ -25,107 +25,51 @@ class TodoWidget extends React.Component {
             </div>
         </main>;
     }
-    
+
     constructor(props) {
         super(props);
         this.state = {
             rows: this.props.rows
         }
     }
-    
+
     componentWillReceiveProps(nextProps) {
         this.setState({rows: nextProps.rows});
     }
 }
 
 class App extends React.Component {
-    
+
     changeTodo = (indexToChange) => {
         let rows = this.props.rows;
         let row = rows[indexToChange];
         row.isDone = !row.isDone;
         this.setState({rows: rows});
-        
+
     };
-    
+
     deleteTodo = (indexToRemove) => {
         const rowsAfterDelete = this.props.rows;
         rowsAfterDelete.splice(indexToRemove, 1);
         this.setState({"rows": rowsAfterDelete});
     };
-    
-    newTodo = (todo) => {
-        this.props.dispatch({type: 'NEW_TODO_ACTION', title: todo});
-    };
-    
-    toggleDone = () => {
-        let rows = this.props.rows;
-        const isAllDone = rows.every(todo => todo.isDone);
-        rows.map(todo => todo.isDone = !isAllDone);
-        this.setState({rows: rows});
-    };
-    isAllDone = () => {
-        let rows = this.props.rows;
-        return rows.every((x) => x.isDone);
-    };
-    
-    clearCompleted = () => {
-        this.props.dispatch({type: 'CLEAR_COMPLETED'});
-        // const rows = this.props.rows;
-        // const unCompletedTodos = rows.filter(row => !row.isDone);
-        // this.setState({rows: unCompletedTodos});
-    };
-    
+
     render = () => {
         return <div>
-            <Header
-                onNew={this.newTodo}
-                onIsAllDone={this.isAllDone()}
-                onToggleDone={this.toggleDone}/>
-            <TodoWidget rows={this.props.rows} onChangeTodo={this.changeTodo} onDelete={this.deleteTodo}/>
-            <Footer clearCompleted={this.clearCompleted}
-                    rowsLength={this.props.rows.filter(todo => !todo.isDone).length}/>
+            <Header/>
+            <TodoWidget
+                rows={this.props.rows}
+                onChangeTodo={this.changeTodo}
+                onDelete={this.deleteTodo}/>
+            <Footer/>
         </div>
     }
 }
 
 let mapStateToProps = (state) => {
-    // debugger;
-    return {
-        rows: state.rows
-    };
+    return {rows: state.rows};
 };
 
-
-const Footer = (props) => {
-    let itemsLeftStyle = {
-        display: "inline-block",
-        "marginLeft": "10px"
-    };
-    let linksStyle = {
-        display: "inline-block",        
-    };
-    
-    return <footer className="footer">
-        <div className="todo-count" style={itemsLeftStyle}>{props.rowsLength} items left</div>
-        <ul className="filters" style={linksStyle}>
-            <li>
-                <a>All</a>
-            </li>
-            <li>
-                <a>Active</a>
-            </li>
-            <li>
-                <a>Completed</a>
-            </li>
-        </ul>
-        
-        <div style={{display:"inline", position:"absolute",right:"15px"}}>
-            <a className="clear-completed" style={linksStyle} href="#" onClick={props.clearCompleted}>Clear
-                completed</a>
-        </div>
-    </footer>
-};
 
 const initialState = {
     rows: [
@@ -145,21 +89,36 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'NEW_TODO_ACTION':
-            let newRow = {title: action.title, isDone: false};
-            return {rows: [...state.rows, newRow]};
+            let newRow = {
+                title: action.title,
+                isDone: false
+            };
+            return {
+                rows: [
+                    ...state.rows,
+                    newRow
+                ]
+            };
         case 'CLEAR_COMPLETED':
-            let unCompletedTodos = state.rows.filter(row => !row.isDone);
+            let unCompletedTodos = state
+                .rows
+                .filter(row => !row.isDone);
             return {rows: unCompletedTodos};
-
+        case 'TOGGLE_ALL':
+            let toggledTodos = state.rows;
+            const isAllDone = toggledTodos.every(todo => todo.isDone);
+            toggledTodos.map(todo => todo.isDone = !isAllDone);
+            return {rows: [...toggledTodos]};
+        
     }
     return state;
 };
 
 const store = createStore(reducer);
 
-let XXX = connect(mapStateToProps)(App);
+let AppElement = connect(mapStateToProps)(App);
 
 render(
     <Provider store={store}>
-        <XXX></XXX>
-    </Provider>, document.querySelector('.app'));
+    <AppElement></AppElement>
+</Provider>, document.querySelector('.app'));
