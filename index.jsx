@@ -12,9 +12,7 @@ class TodoWidget extends React.Component {
         const todos = this
             .state
             .rows
-            .map((row, i) => <Todo
-                onChangeTodo={this.props.onChangeTodo}
-                onDelete={this.props.onDelete}
+            .map((row, i) => <Todo                
                 isDone={row.isDone}
                 number={row.title}
                 key={i}
@@ -48,19 +46,15 @@ class App extends React.Component {
 
     };
 
-    deleteTodo = (indexToRemove) => {
-        const rowsAfterDelete = this.props.rows;
-        rowsAfterDelete.splice(indexToRemove, 1);
-        this.setState({"rows": rowsAfterDelete});
-    };
+    // deleteTodo = (indexToRemove) => {     const rowsAfterDelete =
+    // this.props.rows;     rowsAfterDelete.splice(indexToRemove, 1);
+    // this.setState({"rows": rowsAfterDelete}); };
 
     render = () => {
         return <div>
             <Header/>
             <TodoWidget
-                rows={this.props.rows}
-                onChangeTodo={this.changeTodo}
-                onDelete={this.deleteTodo}/>
+                rows={this.props.rows}/>
             <Footer/>
         </div>
     }
@@ -69,7 +63,6 @@ class App extends React.Component {
 let mapStateToProps = (state) => {
     return {rows: state.rows};
 };
-
 
 const initialState = {
     rows: [
@@ -99,6 +92,7 @@ const reducer = (state = initialState, action) => {
                     newRow
                 ]
             };
+
         case 'CLEAR_COMPLETED':
             let unCompletedTodos = state
                 .rows
@@ -108,8 +102,26 @@ const reducer = (state = initialState, action) => {
             let toggledTodos = state.rows;
             const isAllDone = toggledTodos.every(todo => todo.isDone);
             toggledTodos.map(todo => todo.isDone = !isAllDone);
-            return {rows: [...toggledTodos]};
-        
+            return {
+                rows: [...toggledTodos]
+            };
+
+        case 'DELETE_TODO_ACTION':
+            let indexToRemove = action.index;
+            const rowsAfterDelete = state.rows;
+            rowsAfterDelete.splice(indexToRemove, 1);
+            return {
+                rows: [...rowsAfterDelete]
+            };
+
+        case 'CHANGE_TODO_ACTION':
+            let indexToChange = action.index;
+            const rowsAfterChange = state.rows;
+            rowsAfterChange[indexToChange].isDone = !rowsAfterChange[indexToChange].isDone;
+            return {
+                rows: [...rowsAfterChange]
+            };
+
     }
     return state;
 };

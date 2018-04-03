@@ -1,29 +1,26 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-export default class Todo extends React.Component {
-    deleteTodoHandler = (event) => {
-        const indexToRemove = event
-            .target
-            .getAttribute("data-key");
-        this
-            .props
-            .onDelete(indexToRemove);
-    };
-    handleChangeHandler = (event) => {
-        const indexToChange = event
-            .target
-            .getAttribute("data-key");
-        this
-            .props
-            .onChangeTodo(indexToChange);
-    };
-    
+class Todo extends React.Component {
+
     constructor(props) {
         super(props);
+        this.deleteTodoHandler = this.deleteTodoHandler.bind(this);
+        this.handleChangeHandler = this.handleChangeHandler.bind(this);
+
         this.state = {
             isDone: props.isDone
         };
     }
+
+    deleteTodoHandler(event) {        
+        this.props.dispatch({type: 'DELETE_TODO_ACTION', index: event.target.getAttribute("data-key")});    
+    };
+    handleChangeHandler = (event) => {        
+        this.props.dispatch({type: 'CHANGE_TODO_ACTION', index: event.target.getAttribute("data-key")});    
+    };
+    
+    
     
     render() {
         return <li style={{
@@ -49,4 +46,13 @@ export default class Todo extends React.Component {
         </li>;
     }
 }
+
+function mapStateToProps(state) {
+    debugger;
+    return {
+        rows: state.rows
+    };
+}
+
+export default connect(mapStateToProps)(Todo);
 
